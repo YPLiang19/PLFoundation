@@ -16,6 +16,8 @@
 PLFOUNDATON_NAMESPACE_BEGIN
 
 class PLLocking{
+public:
+    virtual ~PLLocking(){}
     virtual void lock() = 0;
     virtual void unlock() = 0;
 };
@@ -29,14 +31,14 @@ public:
     PLLock();
     virtual ~PLLock();
     
-    void setName(std::string &name);
-    std::string& name();
+    void setName(const char *name);
+    std::string name();
     
     void lock();
     bool tryLock();
     
     bool lockBeforeDate(PLDate *limit);
-    void unLock();
+    void unlock();
 };
 
 
@@ -48,18 +50,19 @@ public:
     PLRecursiveLock();
     virtual ~PLRecursiveLock();
     
-    void setName(std::string &name);
-    std::string& name();
+    void setName(const char *name);
+    std::string name();
     
     void lock();
     bool tryLock();
     bool lockBeforeDate(PLDate *limit);
     
-    void unLock();
+    void unlock();
 };
 
-
+class PLConditionLock;
 class PLCondition : public PLLocking{
+    friend PLConditionLock;
 protected:
     pthread_cond_t _condition;
     pthread_mutex_t _mutex;
@@ -68,47 +71,45 @@ public:
     PLCondition();
     ~PLCondition();
     
-    void setName(std::string &name);
+    void setName(std::string &&name);
     std::string& name();
     
     void lock();
-    void unLock();
+    void unlock();
     
     void wait();
     bool waitUntilDate(PLDate *limit);
     void signal();
     void broadcast();
+private:
+    bool tryLock();
+    bool lockBeforeDate(PLDate *limit);
 };
 
-class NSConditionLock : public PLLocking{
+class PLConditionLock : public PLLocking{
 protected:
     PLCondition *_condition;
     int _condition_value;
     std::string _name;
 public:
-    NSConditionLock(int value = 0);
-    ~NSConditionLock();
+    PLConditionLock(int value = 0);
+    ~PLConditionLock();
     
-    void setName(std::string &name);
-    std::string& name();
+    void setName(const char *name);
+    std::string name();
     
     int condition();
     
     void lock();
-    bool tryLock;
+    bool tryLock();
     bool lockBeforeDate(PLDate *limit);
     void lockWhenCondition(int value);
     bool tryLockWhenCondition(int value);
-    bool lockWhenConditionAndBeforeDate(int conditionToMeet, PLDate *limitDate);
+    bool lockWhenConditionAndBeforeDate(int value, PLDate *limitDate);
     
     void unlock();
     void unlockWithCondition(int value);
 };
-
-
-
-
-
 
 PLFOUNDATON_NAMESPACE_END
 

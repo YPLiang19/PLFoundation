@@ -32,11 +32,11 @@ PLLock::~PLLock(){
     pthread_mutex_destroy(&_mutex);
 }
 
-void PLLock::setName(std::string &name){
+void PLLock::setName(const char *name){
     _name = name;
 }
 
-std::string& PLLock::name(){
+std::string PLLock::name(){
     return _name;
 }
 
@@ -60,7 +60,7 @@ bool PLLock::lockBeforeDate(PLDate *limit){
     return 0;
 }
 
-void PLLock::unLock(){
+void PLLock::unlock(){
     pthread_mutex_unlock(&_mutex);
 }
 
@@ -80,11 +80,11 @@ PLRecursiveLock::~PLRecursiveLock(){
     pthread_mutex_destroy(&_mutex);
 }
 
-void PLRecursiveLock::setName(std::string &name){
+void PLRecursiveLock::setName(const char *name){
     _name = name;
 }
 
-std::string& PLRecursiveLock::name(){
+std::string PLRecursiveLock::name(){
     return _name;
 }
 
@@ -108,7 +108,7 @@ bool PLRecursiveLock::lockBeforeDate(PLDate *limit){
     return 0;
 }
 
-void PLRecursiveLock::unLock(){
+void PLRecursiveLock::unlock(){
     pthread_mutex_unlock(&_mutex);
 }
 
@@ -130,7 +130,7 @@ PLCondition::~PLCondition(){
     pthread_mutex_destroy(&_mutex);
 }
 
-void PLCondition::setName(std::string &name){
+void PLCondition::setName(std::string &&name){
     _name = name;
 }
 
@@ -146,7 +146,7 @@ void PLCondition::lock(){
     pthread_mutex_lock(&_mutex);
 }
 
-void PLCondition::unLock(){
+void PLCondition::unlock(){
     pthread_mutex_unlock(&_mutex);
 }
 
@@ -183,6 +183,113 @@ void PLCondition::signal(){
 void PLCondition::broadcast(){
     pthread_cond_broadcast(&_condition);
 }
+
+bool PLCondition::tryLock(){
+    int err = pthread_mutex_trylock(&_mutex);
+    return err == 0;
+}
+
+bool PLCondition::lockBeforeDate(PLDate *limit){
+    do {
+        int err = pthread_mutex_trylock(&_mutex);
+        if (0 == err) {
+            return true;
+        }
+        sched_yield();
+    } while (limit->timeIntervalSinceNow() >0);
+    return false;
+}
+
+
+#pragma mark - PLConditionLock
+
+PLConditionLock::PLConditionLock(int value): _condition_value(value){
+    _condition = new PLCondition();
+    char buf[64];
+    sprintf(buf, "condition-for-lock-%p", this);
+    _condition->setName(buf);
+    
+}
+
+PLConditionLock::~PLConditionLock(){
+    if (_condition) {
+        delete _condition;
+    }
+}
+
+void PLConditionLock::setName(const char *name){
+    _name = name;
+}
+
+std::string PLConditionLock::name(){
+    return _name;
+}
+
+int PLConditionLock::condition(){
+    return _condition_value;
+}
+
+void PLConditionLock::lock(){
+    _condition->lock();
+    
+}
+
+bool PLConditionLock::tryLock(){
+    return _condition->tryLock();
+}
+
+bool PLConditionLock::lockBeforeDate(PLDate *limit){
+    return _condition->lockBeforeDate(limit);
+}
+
+void PLConditionLock::lockWhenCondition(int value){
+    _condition->lock();
+    while (_condition_value != value) {
+        _condition->wait();
+    }
+}
+
+bool PLConditionLock::tryLockWhenCondition(int value){
+    if (_condition->tryLock()) {
+        if (_condition_value == value) {
+            return true;
+        }else{
+            _condition->unlock();
+        }
+    }
+    return false;
+}
+
+bool PLConditionLock::lockWhenConditionAndBeforeDate(int value, PLDate *limitDate){
+    if (_condition->lockBeforeDate(limitDate) == false) {
+        return false;
+    }
+    
+    if (_condition_value == value) {
+        return true;
+    }
+    
+    while (_condition->waitUntilDate(limitDate)) {
+        if (_condition_value == value) {
+            return true;
+        }
+    }
+    _condition->unlock();
+    return false;
+}
+
+void PLConditionLock::unlock(){
+    _condition->unlock();
+}
+
+void PLConditionLock::unlockWithCondition(int value){
+    _condition_value = value;
+    _condition->broadcast();
+    _condition->unlock();
+}
+
+
+
 
 PLFOUNDATON_NAMESPACE_END
 
