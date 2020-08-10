@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8928F44824E13C32005EDC46 /* PLThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8928F44624E13C32005EDC46 /* PLThread.cpp */; };
+		8928F44924E13C32005EDC46 /* PLThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 8928F44724E13C32005EDC46 /* PLThread.h */; };
 		893D5FC624DCF8FD00275FB3 /* PLFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 893D5FBC24DCF8FD00275FB3 /* PLFoundation.framework */; };
 		893D5FCB24DCF8FD00275FB3 /* PLFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D5FCA24DCF8FD00275FB3 /* PLFoundationTests.m */; };
 		893D5FD924DCF97C00275FB3 /* PLFoundation.h in Headers */ = {isa = PBXBuildFile; fileRef = 893D5FD824DCF97C00275FB3 /* PLFoundation.h */; };
@@ -27,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8928F44624E13C32005EDC46 /* PLThread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLThread.cpp; sourceTree = "<group>"; };
+		8928F44724E13C32005EDC46 /* PLThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLThread.h; sourceTree = "<group>"; };
 		893D5FBC24DCF8FD00275FB3 /* PLFoundation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PLFoundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		893D5FC024DCF8FD00275FB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		893D5FC524DCF8FD00275FB3 /* PLFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PLFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +109,8 @@
 				893D5FDA24DCFBD800275FB3 /* PLLock.cpp */,
 				893D5FE024DD024200275FB3 /* PLDate.h */,
 				893D5FDF24DD024200275FB3 /* PLDate.cpp */,
+				8928F44724E13C32005EDC46 /* PLThread.h */,
+				8928F44624E13C32005EDC46 /* PLThread.cpp */,
 			);
 			name = PLFoundationCore;
 			path = ../../../PLFoundationCore;
@@ -127,6 +133,7 @@
 			files = (
 				893D5FD924DCF97C00275FB3 /* PLFoundation.h in Headers */,
 				893D5FDD24DCFBD800275FB3 /* PLLock.h in Headers */,
+				8928F44924E13C32005EDC46 /* PLThread.h in Headers */,
 				893D5FE224DD024200275FB3 /* PLDate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -228,6 +235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8928F44824E13C32005EDC46 /* PLThread.cpp in Sources */,
 				893D5FDC24DCFBD800275FB3 /* PLLock.cpp in Sources */,
 				893D5FE124DD024200275FB3 /* PLDate.cpp in Sources */,
 			);
