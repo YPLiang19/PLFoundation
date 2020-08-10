@@ -16,6 +16,7 @@ PLFOUNDATON_NAMESPACE_BEGIN
 class PLDate{
 public:
     PLTimeInterval timeIntervalSinceNow();
+    PLTimeInterval timeIntervalSince1970();
 };
 
 PLFOUNDATON_NAMESPACE_END

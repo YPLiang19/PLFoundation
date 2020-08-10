@@ -27,13 +27,16 @@ protected:
     std::string _name;
 public:
     PLLock();
+    virtual ~PLLock();
+    
     void setName(std::string &name);
     std::string& name();
+    
     void lock();
     bool tryLock();
+    
     bool lockBeforeDate(PLDate *limit);
     void unLock();
-    virtual ~PLLock();
 };
 
 
@@ -43,13 +46,16 @@ protected:
     std::string _name;
 public:
     PLRecursiveLock();
+    virtual ~PLRecursiveLock();
+    
     void setName(std::string &name);
     std::string& name();
+    
     void lock();
     bool tryLock();
     bool lockBeforeDate(PLDate *limit);
+    
     void unLock();
-    virtual ~PLRecursiveLock();
 };
 
 
@@ -59,12 +65,44 @@ protected:
     pthread_mutex_t _mutex;
     std::string _name;
 public:
+    PLCondition();
+    ~PLCondition();
+    
+    void setName(std::string &name);
+    std::string& name();
+    
+    void lock();
+    void unLock();
+    
     void wait();
     bool waitUntilDate(PLDate *limit);
     void signal();
     void broadcast();
+};
+
+class NSConditionLock : public PLLocking{
+protected:
+    PLCondition *_condition;
+    int _condition_value;
+    std::string _name;
+public:
+    NSConditionLock(int value = 0);
+    ~NSConditionLock();
+    
     void setName(std::string &name);
-    std::string name();
+    std::string& name();
+    
+    int condition();
+    
+    void lock();
+    bool tryLock;
+    bool lockBeforeDate(PLDate *limit);
+    void lockWhenCondition(int value);
+    bool tryLockWhenCondition(int value);
+    bool lockWhenConditionAndBeforeDate(int conditionToMeet, PLDate *limitDate);
+    
+    void unlock();
+    void unlockWithCondition(int value);
 };
 
 
