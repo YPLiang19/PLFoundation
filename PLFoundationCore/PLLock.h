@@ -39,6 +39,8 @@ public:
     
     bool lockBeforeDate(PLDate *limit);
     void unlock();
+private:
+    static void initialize();
 };
 
 
@@ -58,6 +60,8 @@ public:
     bool lockBeforeDate(PLDate *limit);
     
     void unlock();
+private:
+    static void initialize();
 };
 
 class PLConditionLock;
@@ -71,7 +75,7 @@ public:
     PLCondition();
     ~PLCondition();
     
-    void setName(std::string &&name);
+    void setName(const char *name);
     std::string& name();
     
     void lock();
@@ -82,6 +86,7 @@ public:
     void signal();
     void broadcast();
 private:
+    static void initialize();
     bool tryLock();
     bool lockBeforeDate(PLDate *limit);
 };
@@ -109,6 +114,8 @@ public:
     
     void unlock();
     void unlockWithCondition(int value);
+private:
+    static void initialize();
 };
 
 PLFOUNDATON_NAMESPACE_END

@@ -19,12 +19,16 @@ PLFOUNDATON_NAMESPACE_BEGIN
 
 #pragma mark - PLLock
 
-PLLock::PLLock(){
+void PLLock::initialize(){
     static pl_dispatch_once_t onceToken;
     pl_dispatch_once(&onceToken, [](){
         pthread_mutexattr_init(&attr_normal);
         pthread_mutexattr_settype(&attr_normal, PTHREAD_MUTEX_NORMAL);
     });
+}
+
+PLLock::PLLock(){
+    PLLock::initialize();
     pthread_mutex_init(&_mutex, &attr_reporting);
 }
 
@@ -66,13 +70,16 @@ void PLLock::unlock(){
 
 #pragma mark - PLRecursiveLock
 
-
-PLRecursiveLock::PLRecursiveLock(){
+void PLRecursiveLock::initialize(){
     static pl_dispatch_once_t onceToken;
     pl_dispatch_once(&onceToken, [](){
         pthread_mutexattr_init(&attr_recursive);
         pthread_mutexattr_settype(&attr_recursive, PTHREAD_MUTEX_RECURSIVE);
     });
+}
+
+PLRecursiveLock::PLRecursiveLock(){
+    PLRecursiveLock::initialize();
     pthread_mutex_init(&_mutex, &attr_reporting);
 }
 
@@ -114,13 +121,16 @@ void PLRecursiveLock::unlock(){
 
 #pragma mark - PLCondition
 
-PLCondition::PLCondition(){
+void PLCondition::initialize(){
     static pl_dispatch_once_t onceToken;
     pl_dispatch_once(&onceToken, [](){
         pthread_mutexattr_init(&attr_reporting);
         pthread_mutexattr_settype(&attr_reporting, PTHREAD_MUTEX_ERRORCHECK);
     });
-    
+}
+
+PLCondition::PLCondition(){
+    initialize();
     pthread_cond_init(&_condition, NULL);
     pthread_mutex_init(&_mutex, &attr_reporting);
 }
@@ -130,7 +140,7 @@ PLCondition::~PLCondition(){
     pthread_mutex_destroy(&_mutex);
 }
 
-void PLCondition::setName(std::string &&name){
+void PLCondition::setName(const char *name){
     _name = name;
 }
 
@@ -202,6 +212,13 @@ bool PLCondition::lockBeforeDate(PLDate *limit){
 
 
 #pragma mark - PLConditionLock
+
+void PLConditionLock::initialize(){
+    static pl_dispatch_once_t onceToken;
+    pl_dispatch_once(&onceToken, [](){
+        
+    });
+}
 
 PLConditionLock::PLConditionLock(int value): _condition_value(value){
     _condition = new PLCondition();
@@ -287,9 +304,6 @@ void PLConditionLock::unlockWithCondition(int value){
     _condition->broadcast();
     _condition->unlock();
 }
-
-
-
 
 PLFOUNDATON_NAMESPACE_END
 
