@@ -10,27 +10,40 @@
 #define PLThread_hpp
 
 #include "PLFoundationCoreMacro.h"
+#include "PLDate.h"
 #include <functional>
 #include <string>
 #include <unordered_map>
+#include <pthread.h>
 
 PLFOUNDATON_NAMESPACE_BEGIN
 
 class PLThread{
+    
 private:
     std::function<void(void)> _invoke;
     std::string _name;
-    bool _cancelled;
-    bool _active;
-    bool _finished;
-    std::unordered_map<void *, void *> *_thread_dictionary;
+    bool _cancelled = false;
+    bool _active = false;
+    bool _finished = false;
+    pthread_t _pthreadID = NULL;
+    std::unordered_map<void *, void *> *_thread_dictionary = nullptr;
     
+    PLThread(){};
     static void initialize();
-    
+    void unregisterActiveThread();
+    void registerActiveThread();
     
 public:
+    friend void * pl_threadLauncher(void *thread);
     
     static PLThread *currentThread();
+    static void exit();
+    static void sleepUntilDate(PLDate *date);
+    static void sleepForTimeInterval(PLTimeInterval ti);
+    static PLThread *mainThread();
+    static void setThreadPriority(double priority);
+    static double threadPriority();
     
     template<typename Object, typename Method>
     PLThread(Object *obj, Method method){
@@ -55,27 +68,24 @@ public:
     
     virtual ~PLThread();
     
-    void setName(const char *name);
+    virtual void setName(const char *name);
     
-    std::string name();
+    virtual std::string name();
     
-    bool isCancelled();
+    virtual bool isCancelled();
+    virtual void cancel();
     
-    bool isExecuting();
+    virtual bool isExecuting();
     
-    bool isFinished();
+    virtual bool isFinished();
     
-    bool isMainThread();
+    virtual bool isMainThread();
     
-    void start();
+    virtual void start();
     
-    void main();
+    virtual void main();
     
-    std::unordered_map<void *, void *> *threadDictionary();
-    
-    
-    
-    
+    virtual std::unordered_map<void *, void *> *threadDictionary();
     
 };
 

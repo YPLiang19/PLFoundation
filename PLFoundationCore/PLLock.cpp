@@ -225,7 +225,6 @@ PLConditionLock::PLConditionLock(int value): _condition_value(value){
     char buf[64];
     sprintf(buf, "condition-for-lock-%p", this);
     _condition->setName(buf);
-    
 }
 
 PLConditionLock::~PLConditionLock(){
@@ -248,7 +247,6 @@ int PLConditionLock::condition(){
 
 void PLConditionLock::lock(){
     _condition->lock();
-    
 }
 
 bool PLConditionLock::tryLock(){

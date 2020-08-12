@@ -42,6 +42,7 @@
 		893D5FDE24DCFF6800275FB3 /* PLFoundationCoreMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLFoundationCoreMacro.h; sourceTree = "<group>"; };
 		893D5FDF24DD024200275FB3 /* PLDate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLDate.cpp; sourceTree = "<group>"; };
 		893D5FE024DD024200275FB3 /* PLDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLDate.h; sourceTree = "<group>"; };
+		89DEEBF624E3D80800492945 /* PLFoundation_private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLFoundation_private.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +106,7 @@
 			children = (
 				893D5FDE24DCFF6800275FB3 /* PLFoundationCoreMacro.h */,
 				893D5FD824DCF97C00275FB3 /* PLFoundation.h */,
+				89DEEBF624E3D80800492945 /* PLFoundation_private.h */,
 				893D5FDB24DCFBD800275FB3 /* PLLock.h */,
 				893D5FDA24DCFBD800275FB3 /* PLLock.cpp */,
 				893D5FE024DD024200275FB3 /* PLDate.h */,
