@@ -49,6 +49,9 @@ static inline PLTimeInterval PLPrivateTimeNow(void) {
 }
 
 
+
+
+
 PL_EXTERN_C_END
 
 #endif /* PLFoundationCoreMacro_h */

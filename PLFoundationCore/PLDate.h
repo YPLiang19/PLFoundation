@@ -10,10 +10,11 @@
 #define PLDate_hpp
 
 #include "PLFoundationCoreMacro.h"
+#include "PLObject.h"
 
 PLFOUNDATON_NAMESPACE_BEGIN
 
-class PLDate{
+class PLDate : public PLObject{
 public:
     PLTimeInterval timeIntervalSinceNow();
     PLTimeInterval timeIntervalSince1970();

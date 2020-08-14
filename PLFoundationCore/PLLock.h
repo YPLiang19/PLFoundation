@@ -9,6 +9,7 @@
 #ifndef PLLock_hpp
 #define PLLock_hpp
 #include "PLFoundationCoreMacro.h"
+#include "PLObject.h"
 #include "PLDate.h"
 #include <pthread.h>
 #include <string>
@@ -23,7 +24,7 @@ public:
 };
 
 
-class PLLock : public PLLocking{
+class PLLock : public PLObject, public PLLocking{
 protected:
     pthread_mutex_t _mutex;
     std::string _name;
@@ -44,7 +45,7 @@ private:
 };
 
 
-class PLRecursiveLock : public PLLocking{
+class PLRecursiveLock : public PLObject, public PLLocking{
 protected:
     pthread_mutex_t _mutex;
     std::string _name;
@@ -65,7 +66,7 @@ private:
 };
 
 class PLConditionLock;
-class PLCondition : public PLLocking{
+class PLCondition : public PLObject, public PLLocking{
     friend PLConditionLock;
 protected:
     pthread_cond_t _condition;
@@ -91,7 +92,7 @@ private:
     bool lockBeforeDate(PLDate *limit);
 };
 
-class PLConditionLock : public PLLocking{
+class PLConditionLock : public PLObject, public PLLocking{
 protected:
     PLCondition *_condition;
     int _condition_value;
@@ -118,6 +119,10 @@ private:
     static void initialize();
 };
 
+
+extern  PLRecursiveLock *pl_global_lock;
+
 PLFOUNDATON_NAMESPACE_END
+
 
 #endif /* PLLock_hpp */

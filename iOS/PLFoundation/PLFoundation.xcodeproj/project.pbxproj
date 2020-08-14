@@ -16,6 +16,9 @@
 		893D5FDD24DCFBD800275FB3 /* PLLock.h in Headers */ = {isa = PBXBuildFile; fileRef = 893D5FDB24DCFBD800275FB3 /* PLLock.h */; };
 		893D5FE124DD024200275FB3 /* PLDate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 893D5FDF24DD024200275FB3 /* PLDate.cpp */; };
 		893D5FE224DD024200275FB3 /* PLDate.h in Headers */ = {isa = PBXBuildFile; fileRef = 893D5FE024DD024200275FB3 /* PLDate.h */; };
+		89D9C49F24E68CB7003AD92D /* PLFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89D9C49E24E68CB7003AD92D /* PLFoundation.cpp */; };
+		89DEEC2024E6319300492945 /* PLObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89DEEC1E24E6319300492945 /* PLObject.cpp */; };
+		89DEEC2124E6319300492945 /* PLObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 89DEEC1F24E6319300492945 /* PLObject.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +45,10 @@
 		893D5FDE24DCFF6800275FB3 /* PLFoundationCoreMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLFoundationCoreMacro.h; sourceTree = "<group>"; };
 		893D5FDF24DD024200275FB3 /* PLDate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLDate.cpp; sourceTree = "<group>"; };
 		893D5FE024DD024200275FB3 /* PLDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLDate.h; sourceTree = "<group>"; };
+		89D9C49E24E68CB7003AD92D /* PLFoundation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLFoundation.cpp; sourceTree = "<group>"; };
 		89DEEBF624E3D80800492945 /* PLFoundation_private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLFoundation_private.h; sourceTree = "<group>"; };
+		89DEEC1E24E6319300492945 /* PLObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLObject.cpp; sourceTree = "<group>"; };
+		89DEEC1F24E6319300492945 /* PLObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLObject.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +112,10 @@
 			children = (
 				893D5FDE24DCFF6800275FB3 /* PLFoundationCoreMacro.h */,
 				893D5FD824DCF97C00275FB3 /* PLFoundation.h */,
+				89D9C49E24E68CB7003AD92D /* PLFoundation.cpp */,
 				89DEEBF624E3D80800492945 /* PLFoundation_private.h */,
+				89DEEC1F24E6319300492945 /* PLObject.h */,
+				89DEEC1E24E6319300492945 /* PLObject.cpp */,
 				893D5FDB24DCFBD800275FB3 /* PLLock.h */,
 				893D5FDA24DCFBD800275FB3 /* PLLock.cpp */,
 				893D5FE024DD024200275FB3 /* PLDate.h */,
@@ -136,6 +145,7 @@
 				893D5FD924DCF97C00275FB3 /* PLFoundation.h in Headers */,
 				893D5FDD24DCFBD800275FB3 /* PLLock.h in Headers */,
 				8928F44924E13C32005EDC46 /* PLThread.h in Headers */,
+				89DEEC2124E6319300492945 /* PLObject.h in Headers */,
 				893D5FE224DD024200275FB3 /* PLDate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,6 +247,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89DEEC2024E6319300492945 /* PLObject.cpp in Sources */,
+				89D9C49F24E68CB7003AD92D /* PLFoundation.cpp in Sources */,
 				8928F44824E13C32005EDC46 /* PLThread.cpp in Sources */,
 				893D5FDC24DCFBD800275FB3 /* PLLock.cpp in Sources */,
 				893D5FE124DD024200275FB3 /* PLDate.cpp in Sources */,

@@ -303,6 +303,8 @@ void PLConditionLock::unlockWithCondition(int value){
     _condition->unlock();
 }
 
+PLRecursiveLock *pl_global_lock;
+
 PLFOUNDATON_NAMESPACE_END
 
 

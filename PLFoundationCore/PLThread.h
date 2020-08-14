@@ -10,6 +10,7 @@
 #define PLThread_hpp
 
 #include "PLFoundationCoreMacro.h"
+#include "PLObject.h"
 #include "PLDate.h"
 #include <functional>
 #include <string>
@@ -18,7 +19,7 @@
 
 PLFOUNDATON_NAMESPACE_BEGIN
 
-class PLThread{
+class PLThread :  public PLObject{
     
 private:
     std::function<void(void)> _invoke;
