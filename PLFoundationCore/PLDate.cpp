@@ -15,15 +15,15 @@ PLFOUNDATON_NAMESPACE_BEGIN
 
 
 PLTimeInterval PLDate::timeIntervalSinceNow(){
-    return 0.0;
+    return 10.0;
 }
 
 PLTimeInterval PLDate::timeIntervalSince1970(){
-    return 0.0;
+    return 10.0;
 }
 
 PLTimeInterval PLDate::timeIntervalSinceReferenceDate(){
-    return 0.0;
+    return 10.0;
 }
 
 PLFOUNDATON_NAMESPACE_END

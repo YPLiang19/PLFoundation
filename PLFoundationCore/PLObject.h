@@ -17,6 +17,11 @@
 
 PLFOUNDATON_NAMESPACE_BEGIN
 
+enum PLKeyValueObservingType{
+    PLKeyValueObservingTypeWillChange = 0,
+    PLKeyValueObservingTypeDidChange
+};
+
 class PLKVOInfo;
 class PLRecursiveLock;
 
@@ -27,7 +32,7 @@ private:
 public:
     virtual ~PLObject();
     
-    virtual void observeValueForKeyOfObjectChange(std::string path, PLObject *anObject){
+    virtual void observeValueForKeyOfObjectChange(std::string path, PLObject *anObject, PLKeyValueObservingType type){
         fprintf(stderr, "observealueForKeyOfObjectChange cannot be sent to %p, create an instance overriding this", this);
     }
     
@@ -51,7 +56,9 @@ public:
     ~PLKVOInfo();
     void addObserverForKey(PLObject *anObserver, std::string key);
     void removeObserverForKey(PLObject *anObserver, std::string key);
-    bool isUnobserved();
+    
+    void notifyWillChangeForKey(std::string key);
+    void notifyDidChangeForKey(std::string key);
     
     
 };

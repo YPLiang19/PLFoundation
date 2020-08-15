@@ -41,11 +41,17 @@ void PLObject::removeObserverForKey(PLObject *anObserver, std::string key){
 }
 
 void PLObject::willChangeValueForKey(std::string key){
-    
+    if (_observationInfo == nullptr) {
+        return;
+    }
+    _observationInfo->notifyWillChangeForKey(key);
 }
 
 void PLObject::didChangeValueForKey(std::string key){
-    
+    if (_observationInfo == nullptr) {
+        return;
+    }
+    _observationInfo->notifyDidChangeForKey(key);
 }
 
 #pragma mark - PLKVOInfo
@@ -82,12 +88,28 @@ void PLKVOInfo::removeObserverForKey(PLObject *anObserver, std::string key){
     
 }
 
-bool PLKVOInfo::isUnobserved(){
-    bool result = false;
+void PLKVOInfo::notifyWillChangeForKey(std::string key){
     _lock->lock();
-    result = paths.size() == 0;
+    auto mapIter = paths.find(key);
+    if (mapIter != paths.end()) {
+        auto set = (*mapIter).second;
+        for (auto setIter = set.begin(); setIter != set.end() ; setIter++) {
+            (*setIter)->observeValueForKeyOfObjectChange(key, _instance, PLKeyValueObservingTypeWillChange);
+        }
+    }
     _lock->unlock();
-    return result;
+}
+
+void PLKVOInfo::notifyDidChangeForKey(std::string key){
+    _lock->lock();
+    auto mapIter = paths.find(key);
+    if (mapIter != paths.end()) {
+        auto set = (*mapIter).second;
+        for (auto setIter = set.begin(); setIter != set.end() ; setIter++) {
+            (*setIter)->observeValueForKeyOfObjectChange(key, _instance, PLKeyValueObservingTypeDidChange);
+        }
+    }
+    _lock->unlock();
 }
 
 
