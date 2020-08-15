@@ -11,7 +11,6 @@
 
 PLFOUNDATON_NAMESPACE_BEGIN
 
-
 #pragma mark - PLObject
 
 PLObject::~PLObject(){
@@ -111,8 +110,5 @@ void PLKVOInfo::notifyDidChangeForKey(std::string key){
     }
     _lock->unlock();
 }
-
-
-
 
 PLFOUNDATON_NAMESPACE_END
