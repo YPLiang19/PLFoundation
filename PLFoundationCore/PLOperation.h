@@ -9,16 +9,32 @@
 #ifndef PLOperation_hpp
 #define PLOperation_hpp
 
-
+#include <memory>
 #include "PLFoundationCoreMacro.h"
 #include "PLObject.h"
+#include <list>
+
+typedef int PLOperationQueuePriority;
 
 PLFOUNDATON_NAMESPACE_BEGIN
 
 class PLOperation : public PLObject{
-    void addDependency();
-    
-
+public:
+    void addDependency(std::shared_ptr<PLOperation> &op);
+    void cancel();
+    std::function<void(void)> completionBlock();
+    void setCompletionBlock(std::function<void(void)> &completionBlock);
+    std::list<std::shared_ptr<PLOperation>>& dependencies();
+    bool isCancelled();
+    bool isConcurrent();
+    bool isExecuting();
+    bool isFinished();
+    bool isReady();
+    PLOperationQueuePriority queuePriority();
+    void setQueuePriority(PLOperationQueuePriority priority);
+    void start();
+    void main();
+    void waitUntilFinished();
 };
 
 
