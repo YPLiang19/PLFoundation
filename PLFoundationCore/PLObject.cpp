@@ -70,7 +70,7 @@ void PLKVOInfo::addObserverForKey(PLObject *anObserver, std::string key){
     auto iter = paths.find(key);
     if (iter == paths.end()) {
         std::unordered_set<PLObject *> set;
-        paths.insert(std::pair<std::string, std::unordered_set<PLObject *>>(key, set));
+        paths.insert({key, set});
     }
     iter = paths.find(key);
     (*iter).second.insert(anObserver);
@@ -93,7 +93,7 @@ void PLKVOInfo::notifyWillChangeForKey(std::string key){
     if (mapIter != paths.end()) {
         auto set = (*mapIter).second;
         for (auto setIter = set.begin(); setIter != set.end() ; setIter++) {
-            (*setIter)->observeValueForKeyOfObjectChange(key, _instance, PLKeyValueObservingTypeWillChange);
+            (*setIter)->observeValueForKeyOfObjectWillChange(key, _instance);
         }
     }
     _lock->unlock();
@@ -105,7 +105,7 @@ void PLKVOInfo::notifyDidChangeForKey(std::string key){
     if (mapIter != paths.end()) {
         auto set = (*mapIter).second;
         for (auto setIter = set.begin(); setIter != set.end() ; setIter++) {
-            (*setIter)->observeValueForKeyOfObjectChange(key, _instance, PLKeyValueObservingTypeDidChange);
+            (*setIter)->observeValueForKeyOfObjectDidChange(key, _instance);
         }
     }
     _lock->unlock();

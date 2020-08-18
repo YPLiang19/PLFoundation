@@ -19,6 +19,8 @@
 		89D9C49F24E68CB7003AD92D /* PLFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89D9C49E24E68CB7003AD92D /* PLFoundation.cpp */; };
 		89DE93A924E7F354006C92CE /* PLOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89DE93A724E7F354006C92CE /* PLOperation.cpp */; };
 		89DE93AA24E7F354006C92CE /* PLOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 89DE93A824E7F354006C92CE /* PLOperation.h */; };
+		89DE93EE24EA58D3006C92CE /* PLOperationQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89DE93EC24EA58D3006C92CE /* PLOperationQueue.cpp */; };
+		89DE93EF24EA58D3006C92CE /* PLOperationQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 89DE93ED24EA58D3006C92CE /* PLOperationQueue.h */; };
 		89DEEC2024E6319300492945 /* PLObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89DEEC1E24E6319300492945 /* PLObject.cpp */; };
 		89DEEC2124E6319300492945 /* PLObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 89DEEC1F24E6319300492945 /* PLObject.h */; };
 /* End PBXBuildFile section */
@@ -50,6 +52,8 @@
 		89D9C49E24E68CB7003AD92D /* PLFoundation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLFoundation.cpp; sourceTree = "<group>"; };
 		89DE93A724E7F354006C92CE /* PLOperation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLOperation.cpp; sourceTree = "<group>"; };
 		89DE93A824E7F354006C92CE /* PLOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLOperation.h; sourceTree = "<group>"; };
+		89DE93EC24EA58D3006C92CE /* PLOperationQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLOperationQueue.cpp; sourceTree = "<group>"; };
+		89DE93ED24EA58D3006C92CE /* PLOperationQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLOperationQueue.h; sourceTree = "<group>"; };
 		89DEEBF624E3D80800492945 /* PLFoundation_private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLFoundation_private.h; sourceTree = "<group>"; };
 		89DEEC1E24E6319300492945 /* PLObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLObject.cpp; sourceTree = "<group>"; };
 		89DEEC1F24E6319300492945 /* PLObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLObject.h; sourceTree = "<group>"; };
@@ -128,6 +132,8 @@
 				8928F44624E13C32005EDC46 /* PLThread.cpp */,
 				89DE93A824E7F354006C92CE /* PLOperation.h */,
 				89DE93A724E7F354006C92CE /* PLOperation.cpp */,
+				89DE93ED24EA58D3006C92CE /* PLOperationQueue.h */,
+				89DE93EC24EA58D3006C92CE /* PLOperationQueue.cpp */,
 			);
 			name = PLFoundationCore;
 			path = ../../../PLFoundationCore;
@@ -150,6 +156,7 @@
 			files = (
 				893D5FD924DCF97C00275FB3 /* PLFoundation.h in Headers */,
 				893D5FDD24DCFBD800275FB3 /* PLLock.h in Headers */,
+				89DE93EF24EA58D3006C92CE /* PLOperationQueue.h in Headers */,
 				8928F44924E13C32005EDC46 /* PLThread.h in Headers */,
 				89DEEC2124E6319300492945 /* PLObject.h in Headers */,
 				89DE93AA24E7F354006C92CE /* PLOperation.h in Headers */,
@@ -254,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89DE93EE24EA58D3006C92CE /* PLOperationQueue.cpp in Sources */,
 				89DEEC2024E6319300492945 /* PLObject.cpp in Sources */,
 				89DE93A924E7F354006C92CE /* PLOperation.cpp in Sources */,
 				89D9C49F24E68CB7003AD92D /* PLFoundation.cpp in Sources */,

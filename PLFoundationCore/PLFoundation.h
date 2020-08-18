@@ -9,7 +9,6 @@
 
 PL_EXTERN_C_BEGIN
 
-
 void pl_init(); //使用PLFoundation之前调用
 
 PL_EXTERN_C_END

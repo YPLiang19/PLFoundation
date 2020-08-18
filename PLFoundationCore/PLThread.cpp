@@ -10,6 +10,7 @@
 #include "PLFoundation_private.h"
 #include <iostream>
 #include <unistd.h>
+#include "PLLock.h"
 
 PLFOUNDATON_NAMESPACE_BEGIN
 
@@ -17,30 +18,31 @@ PLFOUNDATON_NAMESPACE_BEGIN
 #define PTHREAD_MAX_PRIORITY 31
 #define PTHREAD_MIN_PRIORITY 0
 
+using namespace std;
+
 #pragma mark - static variables
 
-static PLThread *defaultThread = nullptr;
+static  shared_ptr<PLThread> defaultThread;
 static bool keyInitialized = false;
 static pthread_key_t thread_object_key;
 
+static unordered_map<void *,shared_ptr<PLThread>> _activeThreads;
+
 #pragma mark - C function
 
-
-
 static void exitedThread(void *thread){
-    if (thread != defaultThread) {
-        if (thread == NULL) {
-            thread = pthread_getspecific(thread_object_key);
-            if (thread == NULL) {
-                return;
-            }
-            fprintf(stderr, "abnormally destroyed thread %p", thread);
-        }
+    thread = pthread_getspecific(thread_object_key);
+    if (thread == NULL) {
+        return;
+    }
+    auto iter = _activeThreads.find(thread);
+    if (iter != _activeThreads.end()) {
+        pthread_setspecific(thread_object_key, NULL);
+        pl_global_lock->lock();
+        _activeThreads.erase(thread);
+        pl_global_lock->unlock();
     }
 }
-
-
-
 
 void * pl_threadLauncher(void *thread){
     PLThread *t = (PLThread *)thread;
@@ -101,23 +103,25 @@ void PLThread::initialize(){
     
 }
 
-PLThread *PLThread::currentThread(){
+shared_ptr<PLThread> PLThread::currentThread(){
     PLThread::initialize();
-    PLThread *thread = (PLThread *)pthread_getspecific(thread_object_key);
-    if (thread == nullptr) {
-        thread = new PLThread();
-        thread->_active = true;
-        thread->registerActiveThread();
+    void *threadKey = (void *)pthread_getspecific(thread_object_key);
+    if (threadKey == nullptr) {
+        shared_ptr<PLThread> ret(new PLThread());
+        ret->_active = true;
+        ret->registerActiveThread();
+        
         if (defaultThread == nullptr || pthread_main_np() == 1) {
-            //todo 主线程不能被释放问题处理
-            defaultThread = thread;
+            defaultThread = ret;
         }
+        return ret;
+    }else{
+        return (*_activeThreads.find(threadKey)).second;
     }
-    return thread;
 }
 
 void PLThread::exit(){
-    PLThread *t = PLThread::currentThread();
+    shared_ptr<PLThread> t = PLThread::currentThread();
     if (t->_active) {
         t->unregisterActiveThread();
         if (t == defaultThread) {
@@ -136,7 +140,7 @@ void PLThread::sleepForTimeInterval(PLTimeInterval ti){
     sleepUntilIntervalSinceReferenceDate(PLPrivateTimeNow() + ti);
 }
 
-PLThread *PLThread::mainThread(){
+std::shared_ptr<PLThread> PLThread::mainThread(){
     return defaultThread;
 }
 
@@ -177,6 +181,8 @@ PLThread::~PLThread(){
     if (_thread_dictionary) {
         delete _thread_dictionary;
     }
+    fprintf(stdout, "PLThread%p::~PLThread called", this);
+    
 }
 
 #pragma mark - normal member function
@@ -184,7 +190,7 @@ void PLThread::setName(const char *name){
     _name = name;
 }
 
-std::string PLThread::name(){
+string PLThread::name(){
     return _name;
 }
 
@@ -205,22 +211,22 @@ bool PLThread::isFinished(){
 }
 
 bool PLThread::isMainThread(){
-    return this == defaultThread;
+    return shared_from_this() == defaultThread;
 }
 
 void PLThread::start(){
     if (_active) {
-        fprintf(stderr, "%p::start called on active thread", this);
+        fprintf(stderr, "PLThread%p::start called on active thread", this);
         return;
     }
     
     if (_cancelled) {
-        fprintf(stderr, "%p::start called on cancelled thread", this);
+        fprintf(stderr, "PLThread%p::start called on cancelled thread", this);
         return;
     }
     
     if (_finished) {
-        fprintf(stderr, "%p::start called on finished thread", this);
+        fprintf(stderr, "PLThread%p::start called on finished thread", this);
         return;
     }
     
@@ -234,20 +240,26 @@ void PLThread::start(){
     if (pthread_create(&_pthreadID, &attr, pl_threadLauncher, (void *)this)) {
         //todo 替换成PLError
         fprintf(stderr, "Unable to detach thread (last error %d)", errno);
+        return;
     }
+
+    pl_global_lock->lock();
+    _activeThreads.insert({(void *)this, shared_from_this()});
+    pl_global_lock->unlock();
+    
 }
 
 void PLThread::main(){
     if (_active == false) {
-        fprintf(stderr, "%p::main should call on active thread", this);
+        fprintf(stderr, "PLThread%p::main should call on active thread", this);
         return;
     }
     _invoke();
 }
 
-std::unordered_map<void *, void *> * PLThread::threadDictionary(){
+unordered_map<void *, void *> * PLThread::threadDictionary(){
     if (_thread_dictionary == nullptr) {
-        _thread_dictionary = new std::unordered_map<void *, void*>();
+        _thread_dictionary = new unordered_map<void *, void*>();
     }
     return _thread_dictionary;
 }
@@ -259,11 +271,18 @@ std::unordered_map<void *, void *> * PLThread::threadDictionary(){
         _finished = true;
         //todo 发送线程退出通知和runloop处理
         pthread_setspecific(thread_object_key, NULL);
+        
+        pl_global_lock->lock();
+        _activeThreads.erase((void *)this);
+        pl_global_lock->unlock();
     }
 }
 
  void PLThread::registerActiveThread(){
     pthread_setspecific(thread_object_key, (void *)this);
+    pl_global_lock->lock();
+    _activeThreads.insert({(void *)this, shared_from_this()});
+    pl_global_lock->lock();
 }
 
 
