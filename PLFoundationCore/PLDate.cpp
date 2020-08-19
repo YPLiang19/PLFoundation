@@ -12,7 +12,9 @@
 
 PLFOUNDATON_NAMESPACE_BEGIN
 
-
+PLDate* PLDate::dateWithTimeIntervalSinceNow(PLTimeInterval secsToBeAdded){
+    return nullptr;
+}
 
 PLTimeInterval PLDate::timeIntervalSinceNow(){
     return 10.0;

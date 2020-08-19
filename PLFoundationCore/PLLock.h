@@ -32,7 +32,7 @@ public:
     PLLock();
     virtual ~PLLock();
     
-    void setName(const char *name);
+    void setName(std::string name);
     std::string name();
     
     void lock();
@@ -53,7 +53,7 @@ public:
     PLRecursiveLock();
     virtual ~PLRecursiveLock();
     
-    void setName(const char *name);
+    void setName(std::string name);
     std::string name();
     
     void lock();
@@ -76,7 +76,7 @@ public:
     PLCondition();
     ~PLCondition();
     
-    void setName(const char *name);
+    void setName(std::string name);
     std::string& name();
     
     void lock();
@@ -101,7 +101,7 @@ public:
     PLConditionLock(int value = 0);
     ~PLConditionLock();
     
-    void setName(const char *name);
+    void setName(std::string name);
     std::string name();
     
     int condition();

@@ -65,7 +65,7 @@ public:
     int maxConcurrentOperationCount();
     void setMaxConcurrentOperationCount(int count);
     std::string name();
-    void setName(const char *name);
+    void setName(std::string name);
     size_t operationCount();
     std::list<std::shared_ptr<PLOperation>> operations();
     void waitUntilAllOperationsAreFinished();

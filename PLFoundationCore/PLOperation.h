@@ -27,8 +27,11 @@ enum {
 
 PLFOUNDATON_NAMESPACE_BEGIN
 
+class PLOperationQueue;
+
 
 class PLOperation : public PLObject, public std::enable_shared_from_this<PLOperation>{
+    friend class PLOperationQueue;
 private:
     PLRecursiveLock *_lock;
     PLConditionLock *_cond;
@@ -48,7 +51,7 @@ protected:
     PLOperation();
     
 public:
-   virtual  ~PLOperation();
+    virtual  ~PLOperation();
     
     virtual void addDependency(std::shared_ptr<PLOperation> &op);
     virtual void removeDependency(std::shared_ptr<PLOperation> &op);

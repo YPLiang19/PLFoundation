@@ -12,7 +12,6 @@ PLFOUNDATON_NAMESPACE_BEGIN
 
 using namespace std;
 
-static  const char *threadKey = "NSOperationQueue";
 static int maxConcurrent = 200;
 static  shared_ptr<PLOperationQueue> s_mainQueue = nullptr;
 static int pool = 8;
@@ -125,10 +124,7 @@ int PLOperationQueue::maxConcurrentOperationCount(){
 std::string PLOperationQueue::name(){
     return _name;
 }
-void PLOperationQueue::setName(const char *name){
-    if (name == nullptr) {
-        name = "";
-    }
+void PLOperationQueue::setName(std::string name){
     _lock->lock();
     if (_name != name) {
         this->willChangeValueForKey("name");
@@ -218,7 +214,42 @@ void PLOperationQueue::observeValueForKeyOfObjectDidChange(std::string key, PLOb
 }
 
 void PLOperationQueue::thread(){
-    PLThread::currentThread()->threadDictionary()->insert({(void *)threadKey, (void *)this});
+    for (; ; ) {
+        PLDate *when = PLDate::dateWithTimeIntervalSinceNow(5.0);
+        bool found = _cond->lockWhenConditionAndBeforeDate(1, when);
+        delete when;
+        if (found == false) {
+            break;
+        }
+        
+        shared_ptr<PLOperation> op;
+        if (_starting.size() > 0) {
+            op = _starting.front();
+            _starting.pop_front();
+        }else{
+            op = nullptr;
+        }
+        
+        if (_starting.size() > 0) {
+            _cond->unlockWithCondition(1);
+        }else{
+            _cond->unlockWithCondition(0);
+        }
+        
+        if (op) {
+            try {
+                op->start();
+            } catch (...) {
+                fprintf(stderr, "PLOperationQueue::thread op->start err");
+            }
+            op->finish();
+        }
+    }
+    
+    _lock->lock();
+    --_threadCount;
+    _lock->unlock();
+    PLThread::exit();
 }
 
 void PLOperationQueue::execute(){
@@ -251,10 +282,10 @@ void PLOperationQueue::execute(){
             }
         }
     } catch (...) {
+        fprintf(stderr, "PLOperationQueue::execute err");
         _lock->unlock();
     }
     _lock->unlock();
 }
-
 
 PLFOUNDATON_NAMESPACE_END

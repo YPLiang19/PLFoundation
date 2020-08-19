@@ -36,7 +36,7 @@ PLLock::~PLLock(){
     pthread_mutex_destroy(&_mutex);
 }
 
-void PLLock::setName(const char *name){
+void PLLock::setName(std::string name){
     _name = name;
 }
 
@@ -87,7 +87,7 @@ PLRecursiveLock::~PLRecursiveLock(){
     pthread_mutex_destroy(&_mutex);
 }
 
-void PLRecursiveLock::setName(const char *name){
+void PLRecursiveLock::setName(std::string name){
     _name = name;
 }
 
@@ -140,7 +140,7 @@ PLCondition::~PLCondition(){
     pthread_mutex_destroy(&_mutex);
 }
 
-void PLCondition::setName(const char *name){
+void PLCondition::setName(std::string name){
     _name = name;
 }
 
@@ -233,7 +233,7 @@ PLConditionLock::~PLConditionLock(){
     }
 }
 
-void PLConditionLock::setName(const char *name){
+void PLConditionLock::setName(std::string name){
     _name = name;
 }
 

@@ -137,7 +137,7 @@ public:
     
     
     
-    virtual void setName(const char *name);
+    virtual void setName(std::string name);
     
     virtual std::string name();
     

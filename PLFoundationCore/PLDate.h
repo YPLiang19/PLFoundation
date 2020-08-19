@@ -16,6 +16,8 @@ PLFOUNDATON_NAMESPACE_BEGIN
 
 class PLDate : public PLObject{
 public:
+    static PLDate *dateWithTimeIntervalSinceNow(PLTimeInterval secsToBeAdded);
+    
     PLTimeInterval timeIntervalSinceNow();
     PLTimeInterval timeIntervalSince1970();
     PLTimeInterval timeIntervalSinceReferenceDate();

@@ -17,6 +17,14 @@
 		893D5FE124DD024200275FB3 /* PLDate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 893D5FDF24DD024200275FB3 /* PLDate.cpp */; };
 		893D5FE224DD024200275FB3 /* PLDate.h in Headers */ = {isa = PBXBuildFile; fileRef = 893D5FE024DD024200275FB3 /* PLDate.h */; };
 		89D9C49F24E68CB7003AD92D /* PLFoundation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89D9C49E24E68CB7003AD92D /* PLFoundation.cpp */; };
+		89DE347224ECD8FA00B238F7 /* PLNotification.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89DE347024ECD8FA00B238F7 /* PLNotification.cpp */; };
+		89DE347324ECD8FA00B238F7 /* PLNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = 89DE347124ECD8FA00B238F7 /* PLNotification.h */; };
+		89DE347624ECDDC700B238F7 /* PLNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89DE347424ECDDC700B238F7 /* PLNotificationCenter.cpp */; };
+		89DE347724ECDDC700B238F7 /* PLNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 89DE347524ECDDC700B238F7 /* PLNotificationCenter.h */; };
+		89DE347A24ED019500B238F7 /* PLBlockOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89DE347824ED019500B238F7 /* PLBlockOperation.cpp */; };
+		89DE347B24ED019500B238F7 /* PLBlockOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 89DE347924ED019500B238F7 /* PLBlockOperation.h */; };
+		89DE347E24ED041700B238F7 /* PLInvocationOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89DE347C24ED041700B238F7 /* PLInvocationOperation.cpp */; };
+		89DE347F24ED041700B238F7 /* PLInvocationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 89DE347D24ED041700B238F7 /* PLInvocationOperation.h */; };
 		89DE93A924E7F354006C92CE /* PLOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89DE93A724E7F354006C92CE /* PLOperation.cpp */; };
 		89DE93AA24E7F354006C92CE /* PLOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 89DE93A824E7F354006C92CE /* PLOperation.h */; };
 		89DE93EE24EA58D3006C92CE /* PLOperationQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89DE93EC24EA58D3006C92CE /* PLOperationQueue.cpp */; };
@@ -50,6 +58,14 @@
 		893D5FDF24DD024200275FB3 /* PLDate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLDate.cpp; sourceTree = "<group>"; };
 		893D5FE024DD024200275FB3 /* PLDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLDate.h; sourceTree = "<group>"; };
 		89D9C49E24E68CB7003AD92D /* PLFoundation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLFoundation.cpp; sourceTree = "<group>"; };
+		89DE347024ECD8FA00B238F7 /* PLNotification.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLNotification.cpp; sourceTree = "<group>"; };
+		89DE347124ECD8FA00B238F7 /* PLNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLNotification.h; sourceTree = "<group>"; };
+		89DE347424ECDDC700B238F7 /* PLNotificationCenter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLNotificationCenter.cpp; sourceTree = "<group>"; };
+		89DE347524ECDDC700B238F7 /* PLNotificationCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLNotificationCenter.h; sourceTree = "<group>"; };
+		89DE347824ED019500B238F7 /* PLBlockOperation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLBlockOperation.cpp; sourceTree = "<group>"; };
+		89DE347924ED019500B238F7 /* PLBlockOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLBlockOperation.h; sourceTree = "<group>"; };
+		89DE347C24ED041700B238F7 /* PLInvocationOperation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLInvocationOperation.cpp; sourceTree = "<group>"; };
+		89DE347D24ED041700B238F7 /* PLInvocationOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLInvocationOperation.h; sourceTree = "<group>"; };
 		89DE93A724E7F354006C92CE /* PLOperation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLOperation.cpp; sourceTree = "<group>"; };
 		89DE93A824E7F354006C92CE /* PLOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLOperation.h; sourceTree = "<group>"; };
 		89DE93EC24EA58D3006C92CE /* PLOperationQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PLOperationQueue.cpp; sourceTree = "<group>"; };
@@ -132,8 +148,16 @@
 				8928F44624E13C32005EDC46 /* PLThread.cpp */,
 				89DE93A824E7F354006C92CE /* PLOperation.h */,
 				89DE93A724E7F354006C92CE /* PLOperation.cpp */,
+				89DE347924ED019500B238F7 /* PLBlockOperation.h */,
+				89DE347824ED019500B238F7 /* PLBlockOperation.cpp */,
+				89DE347D24ED041700B238F7 /* PLInvocationOperation.h */,
+				89DE347C24ED041700B238F7 /* PLInvocationOperation.cpp */,
 				89DE93ED24EA58D3006C92CE /* PLOperationQueue.h */,
 				89DE93EC24EA58D3006C92CE /* PLOperationQueue.cpp */,
+				89DE347124ECD8FA00B238F7 /* PLNotification.h */,
+				89DE347024ECD8FA00B238F7 /* PLNotification.cpp */,
+				89DE347524ECDDC700B238F7 /* PLNotificationCenter.h */,
+				89DE347424ECDDC700B238F7 /* PLNotificationCenter.cpp */,
 			);
 			name = PLFoundationCore;
 			path = ../../../PLFoundationCore;
@@ -154,9 +178,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89DE347B24ED019500B238F7 /* PLBlockOperation.h in Headers */,
 				893D5FD924DCF97C00275FB3 /* PLFoundation.h in Headers */,
+				89DE347724ECDDC700B238F7 /* PLNotificationCenter.h in Headers */,
 				893D5FDD24DCFBD800275FB3 /* PLLock.h in Headers */,
+				89DE347F24ED041700B238F7 /* PLInvocationOperation.h in Headers */,
 				89DE93EF24EA58D3006C92CE /* PLOperationQueue.h in Headers */,
+				89DE347324ECD8FA00B238F7 /* PLNotification.h in Headers */,
 				8928F44924E13C32005EDC46 /* PLThread.h in Headers */,
 				89DEEC2124E6319300492945 /* PLObject.h in Headers */,
 				89DE93AA24E7F354006C92CE /* PLOperation.h in Headers */,
@@ -264,9 +292,13 @@
 				89DE93EE24EA58D3006C92CE /* PLOperationQueue.cpp in Sources */,
 				89DEEC2024E6319300492945 /* PLObject.cpp in Sources */,
 				89DE93A924E7F354006C92CE /* PLOperation.cpp in Sources */,
+				89DE347624ECDDC700B238F7 /* PLNotificationCenter.cpp in Sources */,
+				89DE347E24ED041700B238F7 /* PLInvocationOperation.cpp in Sources */,
 				89D9C49F24E68CB7003AD92D /* PLFoundation.cpp in Sources */,
+				89DE347A24ED019500B238F7 /* PLBlockOperation.cpp in Sources */,
 				8928F44824E13C32005EDC46 /* PLThread.cpp in Sources */,
 				893D5FDC24DCFBD800275FB3 /* PLLock.cpp in Sources */,
+				89DE347224ECD8FA00B238F7 /* PLNotification.cpp in Sources */,
 				893D5FE124DD024200275FB3 /* PLDate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,7 +373,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -396,7 +428,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

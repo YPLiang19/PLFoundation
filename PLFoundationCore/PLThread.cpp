@@ -186,7 +186,7 @@ PLThread::~PLThread(){
 }
 
 #pragma mark - normal member function
-void PLThread::setName(const char *name){
+void PLThread::setName(std::string name){
     _name = name;
 }
 
