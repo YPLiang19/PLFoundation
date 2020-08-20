@@ -78,23 +78,23 @@ private:
     
     
     template<typename Object, typename Method>
-    PLThread(Object *obj, Method method){
-        _invoke = [obj, method](){
-            (obj->*method)();
+    PLThread(Object *objectPtr, Method method){
+        _invoke = [objectPtr, method](){
+             if (objectPtr) (objectPtr->*method)();
         };
     }
        
     template<typename Object, typename Method, typename Argument>
-    PLThread(Object *obj, Method method, Argument arg){
-        _invoke = [obj, method, arg](){
-            (obj->*method)(arg);
+    PLThread(Object *objectPtr, Method method, Argument arg){
+        _invoke = [objectPtr, method, arg](){
+             if (objectPtr) (objectPtr->*method)(arg);
         };
     }
        
     template<typename Object, typename Method, typename Argument1, typename Argument2>
-    PLThread(Object *obj, Method method, Argument1 arg1, Argument2 arg2){
-        _invoke = [obj, method, arg1, arg2](){
-            (obj->*method)(arg1, arg2);
+    PLThread(Object *objectPtr, Method method, Argument1 arg1, Argument2 arg2){
+        _invoke = [objectPtr, method, arg1, arg2](){
+             if (objectPtr) (objectPtr->*method)(arg1, arg2);
         };
     }
        

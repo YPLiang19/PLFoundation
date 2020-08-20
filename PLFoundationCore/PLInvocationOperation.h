@@ -32,9 +32,9 @@ private:
     }
     
     template<typename Object, typename Method>
-    PLInvocationOperation(Object *obj, Method method) : PLOperation(){
-        _invoke = [obj, method](){
-            (obj->*method)();
+    PLInvocationOperation(Object *objectPtr, Method method) : PLOperation(){
+        _invoke = [objectPtr, method](){
+            if (objectPtr) (objectPtr->*method)();
         };
     }
     

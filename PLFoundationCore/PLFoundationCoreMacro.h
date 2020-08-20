@@ -25,6 +25,13 @@
 
 PL_EXTERN_C_BEGIN
 
+
+typedef enum{
+    PLOrderedAscending = -1,
+    PLOrderedSame,
+    PLOrderedDescending
+} PLComparisonResult;
+
 typedef long pl_dispatch_once_t;
 typedef void (*pl_dispatch_block_t)();
 typedef double PLTimeInterval;
@@ -48,9 +55,6 @@ static inline PLTimeInterval PLPrivateTimeNow(void) {
   t += (PLTimeInterval)tp.tv_usec / 1000000.0;
   return t;
 }
-
-
-
 
 
 PL_EXTERN_C_END

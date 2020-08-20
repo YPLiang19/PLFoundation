@@ -40,6 +40,8 @@ public:
     PLDate& earlierDate(PLDate &otherDate);
     PLDate& laterDate(PLDate &otherDate);
     
+    PLComparisonResult compare(PLDate &anotherTimer);
+    
     virtual bool operator==(PLDate &anotherDate){ return _secondsSinceRef == anotherDate._secondsSinceRef; }
     virtual bool operator<(PLDate &anotherDate){ return _secondsSinceRef < anotherDate._secondsSinceRef; }
     virtual bool operator<=(PLDate &anotherDate){ return _secondsSinceRef <= anotherDate._secondsSinceRef; }

@@ -85,7 +85,7 @@ public:
         notificationObserver.mKey.mObject = object;
         notificationObserver.mObserver = object;
         notificationObserver.mInvoke = [observer, method](PLNotification notification){
-            (observer->*method)(notification);
+            if (observer) (observer->*method)(notification);
         };
         pthread_rwlock_wrlock(&_lock);
         _observerList.push_back(notificationObserver);

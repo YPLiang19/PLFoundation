@@ -90,4 +90,13 @@ PLDate& PLDate::laterDate(PLDate &otherDate){
     return otherDate;
 }
 
+PLComparisonResult PLDate::compare(PLDate &anotherTimer){
+    if (_secondsSinceRef < anotherTimer._secondsSinceRef) {
+        return PLOrderedAscending;
+    }else if (_secondsSinceRef == anotherTimer._secondsSinceRef){
+        return PLOrderedSame;
+    }
+    return PLOrderedAscending;
+}
+
 PLFOUNDATON_NAMESPACE_END
