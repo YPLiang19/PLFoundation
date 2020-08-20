@@ -36,6 +36,15 @@ public:
     PLTimeInterval timeIntervalSinceNow();
     PLTimeInterval timeIntervalSince1970();
     PLTimeInterval timeIntervalSinceReferenceDate();
+    
+    PLDate& earlierDate(PLDate &otherDate);
+    PLDate& laterDate(PLDate &otherDate);
+    
+    virtual bool operator==(PLDate &anotherDate){ return _secondsSinceRef == anotherDate._secondsSinceRef; }
+    virtual bool operator<(PLDate &anotherDate){ return _secondsSinceRef < anotherDate._secondsSinceRef; }
+    virtual bool operator<=(PLDate &anotherDate){ return _secondsSinceRef <= anotherDate._secondsSinceRef; }
+    virtual bool operator>(PLDate &anotherDate){ return _secondsSinceRef > anotherDate._secondsSinceRef; }
+    virtual bool operator>=(PLDate &anotherDate){ return _secondsSinceRef >= anotherDate._secondsSinceRef; }
 };
 
 PLFOUNDATON_NAMESPACE_END

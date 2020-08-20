@@ -35,7 +35,7 @@ PLDate PLDate::dateWithTimeIntervalSince1970(PLTimeInterval secsToBeAdded){
 }
 
 PLDate PLDate::dateWithTimeInterval(PLTimeInterval secsToBeAdded, PLDate &sinceDate){
-    return PLDate(sinceDate.timeIntervalSinceReferenceDate() + secsToBeAdded);
+    return PLDate(sinceDate._secondsSinceRef + secsToBeAdded);
 }
 
 PLDate PLDate::distantPast(){
@@ -61,7 +61,7 @@ PLDate PLDate::dateByAddingTimeInterval(PLTimeInterval secsToBeAdded){
 }
 
 PLTimeInterval PLDate::timeIntervalSinceDate(PLDate &anotherDate){
-    return _secondsSinceRef - anotherDate.timeIntervalSinceReferenceDate();
+    return _secondsSinceRef - anotherDate._secondsSinceRef;
 }
 
 PLTimeInterval PLDate::timeIntervalSinceNow(){
@@ -74,6 +74,20 @@ PLTimeInterval PLDate::timeIntervalSince1970(){
 
 PLTimeInterval PLDate::timeIntervalSinceReferenceDate(){
     return _secondsSinceRef;
+}
+
+PLDate& PLDate::earlierDate(PLDate &otherDate){
+    if (_secondsSinceRef < otherDate._secondsSinceRef) {
+        return *this;
+    }
+    return otherDate;
+}
+
+PLDate& PLDate::laterDate(PLDate &otherDate){
+    if (_secondsSinceRef > otherDate._secondsSinceRef) {
+        return *this;
+    }
+    return otherDate;
 }
 
 PLFOUNDATON_NAMESPACE_END
