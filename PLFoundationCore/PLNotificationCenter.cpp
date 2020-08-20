@@ -74,9 +74,30 @@ void PLNotificationCenter::removeObserver(void *observer, std::string name, void
     pthread_rwlock_unlock(&_lock);
 }
 
+void PLNotificationCenter::postNotification(PLNotification notification){
+    pthread_rwlock_rdlock(&_lock);
+    try {
+        for (auto i = _observerList.begin(); i != _observerList.end(); i++) {
+            NotificationObserver &notificationObserver = *i;
+            if (notificationObserver.mKey.onNotificationEqaulTo(notification.name, notification.object)) {
+                if (notificationObserver.mInvoke) notificationObserver.mInvoke(notification);
+            }
+        }
+    } catch (...) {
+        fprintf(stderr, "PLNotificationCenter::postNotification err");
+    }
+    pthread_rwlock_unlock(&_lock);
+    
+}
 
+void PLNotificationCenter::postNotification(std::string name, void *object){
+    this->postNotification(name, object, nullptr);
+}
 
-
+void PLNotificationCenter::postNotification(std::string name, void *object, std::unordered_map<void *, void *> *info){
+    PLNotification notification(name, object, info);
+    this->postNotification(notification);
+}
 
 
 

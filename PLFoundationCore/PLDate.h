@@ -15,9 +15,24 @@
 PLFOUNDATON_NAMESPACE_BEGIN
 
 class PLDate : public PLObject{
+private:
+    PLTimeInterval _secondsSinceRef;
 public:
-    static PLDate *dateWithTimeIntervalSinceNow(PLTimeInterval secsToBeAdded);
+    static PLDate date();
+    static PLDate dateWithTimeIntervalSinceNow(PLTimeInterval secsToBeAdded);
+    static PLDate dateWithTimeIntervalSinceReferenceDate(PLTimeInterval secsToBeAdded);
+    static PLDate dateWithTimeIntervalSince1970(PLTimeInterval secsToBeAdded);
+    static PLDate dateWithTimeInterval(PLTimeInterval secsToBeAdded, PLDate &sinceDate);
     
+    static PLDate distantFuture();
+    static PLDate distantPast();
+    
+    PLDate(PLTimeInterval secondsSinceRef = PLPrivateTimeNow()) : _secondsSinceRef(secondsSinceRef){};
+    virtual ~PLDate();
+    
+    PLDate dateByAddingTimeInterval(PLTimeInterval secsToBeAdded);
+    
+    PLTimeInterval timeIntervalSinceDate(PLDate &anotherDate);
     PLTimeInterval timeIntervalSinceNow();
     PLTimeInterval timeIntervalSince1970();
     PLTimeInterval timeIntervalSinceReferenceDate();

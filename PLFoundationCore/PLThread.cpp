@@ -132,8 +132,8 @@ void PLThread::exit(){
     }
 }
 
-void PLThread::sleepUntilDate(PLDate *date){
-    sleepUntilIntervalSinceReferenceDate(date->timeIntervalSinceReferenceDate());
+void PLThread::sleepUntilDate(PLDate &date){
+    sleepUntilIntervalSinceReferenceDate(date.timeIntervalSinceReferenceDate());
 }
 
 void PLThread::sleepForTimeInterval(PLTimeInterval ti){

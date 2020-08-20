@@ -98,7 +98,6 @@ void PLOperationQueue::cancelAllOperation(){
         }
     } catch (...) {
         fprintf(stderr, "PLOperationQueue::cancelAllOperation err");
-        _lock->unlock();
     }
     _lock->unlock();
 }
@@ -215,9 +214,8 @@ void PLOperationQueue::observeValueForKeyOfObjectDidChange(std::string key, PLOb
 
 void PLOperationQueue::thread(){
     for (; ; ) {
-        PLDate *when = PLDate::dateWithTimeIntervalSinceNow(5.0);
+        PLDate when = PLDate::dateWithTimeIntervalSinceNow(5.0);
         bool found = _cond->lockWhenConditionAndBeforeDate(1, when);
-        delete when;
         if (found == false) {
             break;
         }
@@ -283,7 +281,6 @@ void PLOperationQueue::execute(){
         }
     } catch (...) {
         fprintf(stderr, "PLOperationQueue::execute err");
-        _lock->unlock();
     }
     _lock->unlock();
 }

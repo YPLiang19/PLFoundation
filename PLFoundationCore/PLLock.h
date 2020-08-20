@@ -38,7 +38,7 @@ public:
     void lock();
     bool tryLock();
     
-    bool lockBeforeDate(PLDate *limit);
+    bool lockBeforeDate(PLDate &limit);
     void unlock();
 private:
     static void initialize();
@@ -58,7 +58,7 @@ public:
     
     void lock();
     bool tryLock();
-    bool lockBeforeDate(PLDate *limit);
+    bool lockBeforeDate(PLDate &limit);
     
     void unlock();
 private:
@@ -83,13 +83,13 @@ public:
     void unlock();
     
     void wait();
-    bool waitUntilDate(PLDate *limit);
+    bool waitUntilDate(PLDate &limit);
     void signal();
     void broadcast();
 private:
     static void initialize();
     bool tryLock();
-    bool lockBeforeDate(PLDate *limit);
+    bool lockBeforeDate(PLDate &limit);
 };
 
 class PLConditionLock : public PLObject, public PLLocking{
@@ -108,10 +108,10 @@ public:
     
     void lock();
     bool tryLock();
-    bool lockBeforeDate(PLDate *limit);
+    bool lockBeforeDate(PLDate &limit);
     void lockWhenCondition(int value);
     bool tryLockWhenCondition(int value);
-    bool lockWhenConditionAndBeforeDate(int value, PLDate *limitDate);
+    bool lockWhenConditionAndBeforeDate(int value, PLDate &limitDate);
     
     void unlock();
     void unlockWithCondition(int value);

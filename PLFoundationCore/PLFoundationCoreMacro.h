@@ -11,6 +11,7 @@
 
 #include <sys/time.h>
 
+
 #define  PLFOUNDATON_NAMESPACE_BEGIN  namespace PLFoundation {
 #define  PLFOUNDATON_NAMESPACE_END }
 
@@ -44,7 +45,7 @@ static inline PLTimeInterval PLPrivateTimeNow(void) {
 
   gettimeofday(&tp, NULL);
   t = (PLTimeInterval)tp.tv_sec - PLTimeIntervalSince1970;
-  t += (PLTimeInterval)tp.tv_usec / (PLTimeInterval)1000000.0;
+  t += (PLTimeInterval)tp.tv_usec / 1000000.0;
   return t;
 }
 

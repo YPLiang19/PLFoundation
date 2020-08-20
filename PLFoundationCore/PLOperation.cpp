@@ -54,7 +54,7 @@ void PLOperation::addDependency(std::shared_ptr<PLOperation> &op){
             this->didChangeValueForKey("dependencies");
         }
     } catch (...) {
-        _lock->unlock();
+        fprintf(stderr, "PLOperation::addDependency err");
     }
     _lock->unlock();
     
@@ -97,7 +97,7 @@ void PLOperation::cancel(){
                 this->didChangeValueForKey("isCancelled");
             }
         } catch (...) {
-            _lock->unlock();
+            fprintf(stderr, "PLOperation::cancel err");
         }
         _lock->unlock();
     }
@@ -175,10 +175,10 @@ void PLOperation::setQueuePriority(PLOperationQueuePriority pri){
                 _priority = pri;
                 this->didChangeValueForKey("queuePriority");
             } catch (...) {
-                _lock->unlock();
+                fprintf(stderr, "PLOperation::setQueuePriority err");
             }
-            _lock->unlock();
         }
+        _lock->unlock();
      }
     
 }
@@ -217,9 +217,8 @@ void PLOperation::start(){
         this->didChangeValueForKey("isExecuting");
         
     } catch (...) {
-        _lock->unlock();
+        fprintf(stderr, "PLOperation::start 1 err");
     }
-    
     _lock->unlock();
     
     try {

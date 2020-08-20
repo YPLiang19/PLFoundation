@@ -53,14 +53,14 @@ bool PLLock::tryLock(){
     return err == 0;
 }
 
-bool PLLock::lockBeforeDate(PLDate *limit){
+bool PLLock::lockBeforeDate(PLDate &limit){
     do {
         int err = pthread_mutex_trylock(&_mutex);
         if (0 == err) {
             return true;
         }
         sched_yield();
-    } while (limit->timeIntervalSinceNow() >0);
+    } while (limit.timeIntervalSinceNow() >0);
     return 0;
 }
 
@@ -104,14 +104,14 @@ bool PLRecursiveLock::tryLock(){
     return err == 0;
 }
 
-bool PLRecursiveLock::lockBeforeDate(PLDate *limit){
+bool PLRecursiveLock::lockBeforeDate(PLDate &limit){
     do {
         int err = pthread_mutex_trylock(&_mutex);
         if (0 == err) {
             return true;
         }
         sched_yield();
-    } while (limit->timeIntervalSinceNow() >0);
+    } while (limit.timeIntervalSinceNow() >0);
     return 0;
 }
 
@@ -160,8 +160,8 @@ void PLCondition::unlock(){
     pthread_mutex_unlock(&_mutex);
 }
 
-bool PLCondition::waitUntilDate(PLDate *limit){
-    PLTimeInterval ti = limit->timeIntervalSince1970();
+bool PLCondition::waitUntilDate(PLDate &limit){
+    PLTimeInterval ti = limit.timeIntervalSince1970();
     double secs, subsecs;
     struct timespec timeout;
     int retVal = 0;
@@ -199,14 +199,14 @@ bool PLCondition::tryLock(){
     return err == 0;
 }
 
-bool PLCondition::lockBeforeDate(PLDate *limit){
+bool PLCondition::lockBeforeDate(PLDate &limit){
     do {
         int err = pthread_mutex_trylock(&_mutex);
         if (0 == err) {
             return true;
         }
         sched_yield();
-    } while (limit->timeIntervalSinceNow() >0);
+    } while (limit.timeIntervalSinceNow() >0);
     return false;
 }
 
@@ -253,7 +253,7 @@ bool PLConditionLock::tryLock(){
     return _condition->tryLock();
 }
 
-bool PLConditionLock::lockBeforeDate(PLDate *limit){
+bool PLConditionLock::lockBeforeDate(PLDate &limit){
     return _condition->lockBeforeDate(limit);
 }
 
@@ -275,7 +275,7 @@ bool PLConditionLock::tryLockWhenCondition(int value){
     return false;
 }
 
-bool PLConditionLock::lockWhenConditionAndBeforeDate(int value, PLDate *limitDate){
+bool PLConditionLock::lockWhenConditionAndBeforeDate(int value, PLDate &limitDate){
     if (_condition->lockBeforeDate(limitDate) == false) {
         return false;
     }

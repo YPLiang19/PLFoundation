@@ -15,14 +15,12 @@
 
 PLFOUNDATON_NAMESPACE_BEGIN
 
-class PLNotification : public PLObject{
-private:
-    std::string _name;
-    void *_object;
-    std::unordered_map<void *, void *> *_info;
+struct PLNotification : public PLObject{
+    std::string name;
+    void *object;
+    std::unordered_map<void *, void *> *info;
     
-public:
-    PLNotification(std::string name, void *object, std::unordered_map<void *, void *> *info) : _name(name), _object(object), _info(info){};
+    PLNotification(std::string name, void *object, std::unordered_map<void *, void *> *info) : name(name), object(object), info(info){};
     PLNotification(std::string name, void *object) : PLNotification(name, object, nullptr){}
     
 };

@@ -18,13 +18,14 @@
 
 PLFOUNDATON_NAMESPACE_BEGIN
 
-
-
-
-
 struct NotificationObserverKey{
     std::string mName;
     void *mObject = nullptr;
+    
+    
+    bool operator==(NotificationObserverKey &o){
+        return mName == o.mName && mObject == o.mObject;
+    }
     
     bool onRemoveEqaulTo(std::string name, void *object){
         if (name.empty() && object == nullptr) {
@@ -41,20 +42,20 @@ struct NotificationObserverKey{
         return mName == name  && mObject == object;
     }
     
-//    bool onNotificationEqaulTo(NotificationObserverKey &o){
-//        if (name.empty() && object == nullptr) {
-//            return true;
-//        }
-//
-//        if (object == nullptr) {
-//            return name == o.name;;
-//        }
-//
-//        if (name.empty()) {
-//            return object == o.object;
-//        }
-//        return name == o.name  && object == o.object;
-//    }
+    bool onNotificationEqaulTo(std::string name, void *object){
+        if (mName.empty() && mObject == nullptr) {
+            return true;
+        }
+
+        if (mObject == nullptr) {
+            return mName == name;;
+        }
+
+        if (mName.empty()) {
+            return mObject == object;
+        }
+        return mName == name  && mObject == object;
+    }
 };
 
 struct NotificationObserver {
@@ -95,7 +96,7 @@ public:
     void removeObserver(void *observer);
     void removeObserver(void *observer, std::string name, void *object);
     
-    void postNotification(PLNotification *notification);
+    void postNotification(PLNotification notification);
     void postNotification(std::string name, void *object);
     void postNotification(std::string name, void *object, std::unordered_map<void *, void *> *info);
     

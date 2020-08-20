@@ -129,7 +129,7 @@ public:
     
     static std::shared_ptr<PLThread> currentThread();
     static void exit();
-    static void sleepUntilDate(PLDate *date);
+    static void sleepUntilDate(PLDate &date);
     static void sleepForTimeInterval(PLTimeInterval ti);
     static std::shared_ptr<PLThread> mainThread();
     static void setThreadPriority(double priority);
