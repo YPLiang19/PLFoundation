@@ -254,7 +254,7 @@ void PLThread::main(){
         fprintf(stderr, "PLThread%p::main should call on active thread", this);
         return;
     }
-    _invoke();
+    _block();
 }
 
 unordered_map<void *, void *> * PLThread::threadDictionary(){

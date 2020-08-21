@@ -23,7 +23,7 @@ PLFOUNDATON_NAMESPACE_BEGIN
 class PLThread :  public PLObject, public std::enable_shared_from_this<PLThread>{
     
 private:
-    std::function<void(void)> _invoke;
+    std::function<void(void)> _block;
     std::string _name;
     bool _cancelled = false;
     bool _active = false;
@@ -33,45 +33,46 @@ private:
     
     PLThread(){};
     
+    PLThread(std::function<void(void)> block) : _block(block){}
     
     template<typename Object, typename Method>
     PLThread(std::shared_ptr<Object> objectPtr, Method method){
-        _invoke = [objectPtr, method](){
+        _block = [objectPtr, method](){
             if (objectPtr) (objectPtr.get()->*method)();
         };
     }
        
     template<typename Object, typename Method, typename Argument>
     PLThread(std::shared_ptr<Object> objectPtr, Method method, Argument arg){
-        _invoke = [objectPtr, method, arg](){
+        _block = [objectPtr, method, arg](){
             if (objectPtr) (objectPtr.get()->*method)();
         };
     }
        
     template<typename Object, typename Method, typename Argument1, typename Argument2>
     PLThread(std::shared_ptr<Object> objectPtr, Method method, Argument1 arg1, Argument2 arg2){
-        _invoke = [objectPtr, method, arg1, arg2](){
+        _block = [objectPtr, method, arg1, arg2](){
             if (objectPtr) (objectPtr.get()->*method)();
         };
     }
     
     template<typename Object, typename Method>
     PLThread(std::weak_ptr<Object> objectPtr, Method method){
-        _invoke = [objectPtr, method](){
+        _block = [objectPtr, method](){
             if (!objectPtr.expired()) (objectPtr.lock().get()->*method)();
         };
     }
        
     template<typename Object, typename Method, typename Argument>
     PLThread(std::weak_ptr<Object> objectPtr, Method method, Argument arg){
-        _invoke = [objectPtr, method, arg](){
+        _block = [objectPtr, method, arg](){
             if (!objectPtr.expired()) (objectPtr.lock().get()->*method)();
         };
     }
        
     template<typename Object, typename Method, typename Argument1, typename Argument2>
     PLThread(std::weak_ptr<Object> objectPtr, Method method, Argument1 arg1, Argument2 arg2){
-        _invoke = [objectPtr, method, arg1, arg2](){
+        _block = [objectPtr, method, arg1, arg2](){
             if (!objectPtr.expired()) (objectPtr.lock().get()->*method)();
         };
     }
@@ -79,21 +80,21 @@ private:
     
     template<typename Object, typename Method>
     PLThread(Object *objectPtr, Method method){
-        _invoke = [objectPtr, method](){
+        _block = [objectPtr, method](){
              if (objectPtr) (objectPtr->*method)();
         };
     }
        
     template<typename Object, typename Method, typename Argument>
     PLThread(Object *objectPtr, Method method, Argument arg){
-        _invoke = [objectPtr, method, arg](){
+        _block = [objectPtr, method, arg](){
              if (objectPtr) (objectPtr->*method)(arg);
         };
     }
        
     template<typename Object, typename Method, typename Argument1, typename Argument2>
     PLThread(Object *objectPtr, Method method, Argument1 arg1, Argument2 arg2){
-        _invoke = [objectPtr, method, arg1, arg2](){
+        _block = [objectPtr, method, arg1, arg2](){
              if (objectPtr) (objectPtr->*method)(arg1, arg2);
         };
     }
@@ -105,25 +106,24 @@ private:
 public:
     friend void * pl_threadLauncher(void *thread);
     
-    
     template<typename ObjectPtr, typename Method>
     static std::shared_ptr<PLThread> thread(ObjectPtr objectPtr, Method method){
-        std::shared_ptr<PLThread> tp(new PLThread(objectPtr, method));
-        return tp;
+        return std::shared_ptr<PLThread> (new PLThread(objectPtr, method));
     }
     
     template<typename ObjectPtr, typename Method, typename Argument>
     static std::shared_ptr<PLThread> thread(ObjectPtr objectPtr, Method method, Argument arg){
-        std::shared_ptr<PLThread> tp(new PLThread(objectPtr, method, arg));
-        return tp;
+        return std::shared_ptr<PLThread> (new PLThread(objectPtr, method, arg));
     }
       
     template<typename ObjectPtr, typename Method, typename Argument1, typename Argument2>
     static std::shared_ptr<PLThread> thread(ObjectPtr objectPtr, Method method, Argument1 arg1, Argument2 arg2){
-        std::shared_ptr<PLThread> tp(new PLThread(objectPtr, method, arg1, arg2));
-        return tp;
+        return std::shared_ptr<PLThread> (new PLThread(objectPtr, method, arg1, arg2));
     }
     
+    static std::shared_ptr<PLThread> thread(std::function<void(void)> block){
+         return std::shared_ptr<PLThread> (new PLThread(block));
+    }
     
     virtual ~PLThread();
     

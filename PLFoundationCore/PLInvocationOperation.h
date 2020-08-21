@@ -15,37 +15,37 @@ PLFOUNDATON_NAMESPACE_BEGIN
 
 class PLInvocationOperation : public PLOperation {
 private:
-    std::function<void(void)> _invoke;
+    std::function<void(void)> _block;
     
     template<typename Object, typename Method>
     PLInvocationOperation(std::shared_ptr<Object> objectPtr, Method method) : PLOperation(){
-        _invoke = [objectPtr, method](){
+        _block = [objectPtr, method](){
             if (objectPtr) (objectPtr.get()->*method)();
         };
     }
     
     template<typename Object, typename Method>
     PLInvocationOperation(std::weak_ptr<Object> objectPtr, Method method) : PLOperation(){
-        _invoke = [objectPtr, method](){
+        _block = [objectPtr, method](){
             if (!objectPtr.expired()) (objectPtr.lock().get()->*method)();
         };
     }
     
     template<typename Object, typename Method>
     PLInvocationOperation(Object *objectPtr, Method method) : PLOperation(){
-        _invoke = [objectPtr, method](){
+        _block = [objectPtr, method](){
             if (objectPtr) (objectPtr->*method)();
         };
     }
     
 public:
     template<typename ObjectPtr, typename Method>
-    static std::shared_ptr<PLInvocationOperation> invocationOperation(ObjectPtr objectPtr, Method method){
+    static std::shared_ptr<PLInvocationOperation> blockOperation(ObjectPtr objectPtr, Method method){
         std::shared_ptr<PLInvocationOperation> tp(new PLInvocationOperation(objectPtr, method));
         return tp;
     }
     
-    void main(){ if (_invoke) _invoke(); }
+    void main(){ if (_block) _block(); }
 };
 
 PLFOUNDATON_NAMESPACE_END

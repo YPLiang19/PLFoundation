@@ -64,9 +64,9 @@ PLComparisonResult PLTimer::compare(std::shared_ptr<PLTimer> anotherTimer){
 }
 
 void PLTimer::fire(){
-    if (_invoke) {
+    if (_block) {
         try {
-            _invoke(shared_from_this());
+            _block(shared_from_this());
         } catch (...) {
             fprintf(stderr, "PLTimer::fire err");
         }

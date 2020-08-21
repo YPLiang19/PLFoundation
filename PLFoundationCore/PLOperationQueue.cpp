@@ -27,7 +27,7 @@ PLOperationQueue::PLOperationQueue(){
 }
 
 PLOperationQueue::~PLOperationQueue(){
-    //kvo unregister
+    //todo kvo unregister
 }
 
 shared_ptr<PLOperationQueue> PLOperationQueue::mainQueue(){
@@ -276,7 +276,6 @@ void PLOperationQueue::execute(){
                     t->start();
                 }
                 _cond->unlockWithCondition(1);
-                
             }
         }
     } catch (...) {

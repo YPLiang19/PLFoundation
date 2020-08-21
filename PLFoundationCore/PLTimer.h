@@ -23,11 +23,11 @@ private:
     bool _repeats;
     PLTimeInterval _interval;
     void *_userInfo;
-    std::function<void(std::shared_ptr<PLTimer>)> _invoke;
+    std::function<void(std::shared_ptr<PLTimer>)> _block;
     
     template<typename Object, typename Method>
     PLTimer(PLTimeInterval interval, std::shared_ptr<Object> objectPtr, Method method, void *userInfo, bool repeats){
-        _invoke = [objectPtr, method](std::shared_ptr<PLTimer> timer){
+        _block = [objectPtr, method](std::shared_ptr<PLTimer> timer){
             if (objectPtr) (objectPtr.get()->*method)(timer);
         };
         init(interval, userInfo, repeats);
@@ -35,7 +35,7 @@ private:
     
     template<typename Object, typename Method>
     PLTimer(PLTimeInterval interval, std::weak_ptr<Object> objectPtr, Method method, void *userInfo, bool repeats){
-        _invoke = [objectPtr, method](std::shared_ptr<PLTimer> timer){
+        _block = [objectPtr, method](std::shared_ptr<PLTimer> timer){
             if (!objectPtr.expired()) (objectPtr.lock().get()->*method)(timer);
         };
         init(interval, userInfo, repeats);
@@ -43,11 +43,17 @@ private:
     
    template<typename Object, typename Method>
    PLTimer(PLTimeInterval interval, Object *objectPtr, Method method, void *userInfo, bool repeats){
-       _invoke = [objectPtr, method](std::shared_ptr<PLTimer> timer){
+       _block = [objectPtr, method](std::shared_ptr<PLTimer> timer){
             if (objectPtr) (objectPtr->*method)(timer);
        };
        init(interval, userInfo, repeats);
    }
+    
+
+    PLTimer(PLTimeInterval interval, std::function<void(std::shared_ptr<PLTimer>)> block, void *userInfo, bool repeats){
+        _block = block;
+        init(interval, userInfo, repeats);
+    }
     
     void init(PLTimeInterval interval, void *userInfo, bool repeats);
     
@@ -62,6 +68,17 @@ public:
     template<typename ObjectPtr, typename Method>
     static std::shared_ptr<PLTimer> timerWithTimeInterval(PLTimeInterval interval, ObjectPtr objectPtr, Method method, void *userInfo, bool repeats){
          return std::shared_ptr<PLTimer>(new PLTimer(interval, objectPtr, method, userInfo, repeats));
+    }
+    
+    static std::shared_ptr<PLTimer> scheduledTimerWithTimeInterval(PLTimeInterval interval, std::function<void(std::shared_ptr<PLTimer>)> block, void *userInfo, bool repeats){
+        std::shared_ptr<PLTimer> timer(new PLTimer(interval, block, userInfo, repeats));
+        PLRunLoop::currentRunLoop()->addTimer(timer);
+        return timer;
+    }
+
+    
+    static std::shared_ptr<PLTimer> timerWithTimeInterval(PLTimeInterval interval, std::function<void(std::shared_ptr<PLTimer>)> block, bool repeats){
+         return std::shared_ptr<PLTimer>(new PLTimer(interval, block, nullptr, repeats));
     }
     
     virtual ~PLTimer();
